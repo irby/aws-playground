@@ -3,7 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - ~/.aws/credentials:/root/.aws/credentials:ro
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
       - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN:-}
+      - AWS_PROFILE=${AWS_PROFILE:-}
