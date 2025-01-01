@@ -1,0 +1,9 @@
+services:
+  python-script:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ~/.aws/credentials:/root/.aws/credentials:ro
+    environment:
+      - AWS_PROFILE=${AWS_PROFILE:-default}
