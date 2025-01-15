@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/assume-sts-role
+      - name: Assume STS Role
+        uses: ./.github/actions/assume-sts-role
         with: 
           aws_account_id: ${{ secrets.aws_account_id }}
       - name: Print hello
@@ -21,4 +22,11 @@ jobs:
       - name: Run Docker container
         working-directory: assume-sts-role-gh-actions
         run: |
-          docker compose up --build
+          docker compose up --build -d
+      - name: Install dependencies
+        working-directory: assume-sts-role-gh-actions
+        run: |
+          pip3 install -r requirements.txt
+      - name: Run unit tests
+        run: |
+          python3 -m unittest
