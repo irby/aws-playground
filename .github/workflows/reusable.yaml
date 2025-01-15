@@ -1,0 +1,22 @@
+on:
+  workflow_call:
+    inputs:
+      print_hello:
+        required: true
+        type: boolean
+    secrets:
+      aws_account_id:
+          required: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/assume-sts-role
+        with: ${{ secrets.aws_account_id }}
+      - name: Print hello
+        if: ${{ inputs.print_hello }}
+        run: echo 'hello'
+      - name: Run Docker container
+        working-directory: assume-sts-role-gh-actions
+        run: |
+          docker compose up --build

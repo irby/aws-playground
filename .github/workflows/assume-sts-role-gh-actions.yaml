@@ -12,7 +12,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run STS role
-        uses: ./.github/actions/assume-sts-role
+        uses: ./.github/workflows/resuable.yaml
         with:
           print_hello: true
+        secrets:
           aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
