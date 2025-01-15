@@ -18,12 +18,3 @@ runs:
         with:
           role-to-assume: arn:aws:iam::${{ inputs.aws_account_id }}:role/GitHubActionsWorkflowRole
           aws-region: us-east-1
-      - name: Print hello
-        if: ${{ inputs.print_hello }}
-        shell: bash
-        run: echo 'hello'
-      - name: Run Docker container
-        shell: bash
-        working-directory: assume-sts-role-gh-actions
-        run: |
-          docker compose up --build
