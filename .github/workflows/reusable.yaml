@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/assume-sts-role
+      - uses: ./.github/actions/assume-sts-role/action.yaml
         with: ${{ secrets.aws_account_id }}
       - name: Print hello
         if: ${{ inputs.print_hello }}
