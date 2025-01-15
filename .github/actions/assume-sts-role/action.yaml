@@ -1,0 +1,32 @@
+name: Assume STS Role
+description: Assume STS role and run a 
+
+inputs:
+  print_hello:
+    required: false
+    default: false
+    type: boolean
+
+runs:
+  using: composite
+  steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsWorkflowRole
+          aws-region: us-east-1
+      - name: Print hello
+        if: ${{ inputs.print_hello }}
+        shell: bash
+        run: echo 'hello'
+      - name: Run Docker container
+        shell: bash
+        working-directory: assume-sts-role-gh-actions
+        env:
+          AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ env.AWS_SESSION_TOKEN }}
+        run: |
+          docker compose up --build
