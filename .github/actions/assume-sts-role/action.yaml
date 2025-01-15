@@ -6,6 +6,9 @@ inputs:
     required: false
     default: false
     type: boolean
+  aws_account_id:
+    required: true
+    type: string
 
 runs:
   using: composite
@@ -15,7 +18,7 @@ runs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsWorkflowRole
+          role-to-assume: arn:aws:iam::${{ inputs.aws_account_id }}:role/GitHubActionsWorkflowRole
           aws-region: us-east-1
       - name: Print hello
         if: ${{ inputs.print_hello }}

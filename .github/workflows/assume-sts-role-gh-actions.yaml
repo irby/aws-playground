@@ -15,3 +15,4 @@ jobs:
         uses: ./.github/actions/assume-sts-role
         with:
           print_hello: true
+          aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
